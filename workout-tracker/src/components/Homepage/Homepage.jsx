@@ -5,6 +5,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { FaDumbbell } from "react-icons/fa6";
 import { TbTreadmill } from "react-icons/tb";
 import { LuBicepsFlexed } from "react-icons/lu";
+import Navbar from "../Navbar/Navbar.jsx";
 
 function Homepage() {
 
@@ -49,7 +50,8 @@ function Homepage() {
     }
   ]
 
-  return (
+  return <>
+  <Navbar />
     <div>
       <div className="flex items-center text-white h-[500px] bg-cover bg-no-repeat bg-center" style={{backgroundImage: "url(/homepage/header.jpg"}}>
         <div className="w-[87.5%] m-auto flex flex-col gap-5">
@@ -98,7 +100,7 @@ function Homepage() {
       <ContactPageHeader/>
       <Footer/>
     </div>
-  )
+  </>
 }
 
 export default Homepage

@@ -1,5 +1,5 @@
 import React from "react";
-import './LoginPage.css' 
+//import './LoginPage.css' 
 
 function LoginPage() {
   return (
@@ -7,6 +7,7 @@ function LoginPage() {
       <meta charSet="UTF-8" />
       <title> Login and Registration Form in HTML &amp; CSS | CodingLab </title>
       <link rel="stylesheet" href="style.css" />
+      <link rel="stylesheet" href="LoginPage.css" />
       {/* Fontawesome CDN Link */}
       <link
         rel="stylesheet"
