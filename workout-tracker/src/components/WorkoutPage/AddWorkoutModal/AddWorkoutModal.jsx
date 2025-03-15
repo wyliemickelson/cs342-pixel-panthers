@@ -8,6 +8,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import Modal from "react-modal"
 import editIcon from "../edit_icon.png"
 import { set } from 'mongoose';
+import { useSelector } from 'react-redux';
 
 Modal.setAppElement("#modal-root");
 
@@ -103,7 +104,9 @@ const AddWorkoutModal = ({ loadedWorkout, modalIsOpen, onClose, onSave }) => {
         });
     }, [errors]);
 
-    const onSubmit = (data) => {
+    const {token, user} = useSelector((state) => state.auth);
+
+    const onSubmit = async (data) => {
         if (workout.length === 0) {
             toast.error("Please add at least one exercise to the workout.");
             return;
@@ -115,6 +118,30 @@ const AddWorkoutModal = ({ loadedWorkout, modalIsOpen, onClose, onSave }) => {
             workoutType,
             exercises: workoutType === "Aerobic" ? aerobicExercises : anaerobicExercises,
         });
+        try {
+            const body = {
+                token: token, 
+                workouts: workout
+            }; 
+
+            console.log(`Sending body: ${JSON.stringify(body)}`)
+
+            const res = await fetch("http://localhost:3000/api/add_workout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(body)
+            });
+
+            if (res.ok) {
+                toast.success("Submited workout sucessfully.");
+            }
+            else {
+                toast.error("Could not submit workout");
+            }
+        } catch (error) {
+            console.error("Submitting workout error:", error);
+            toast.error("An error occurred during workout submitting. Please try again.");
+        }
         reset();
         onClose();
     }

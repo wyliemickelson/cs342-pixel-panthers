@@ -125,6 +125,7 @@ app.post('/api/login', async (req, res) => {
     return res.status(500).json({ message: "Error finding user." });
   }
 })
+
 app.get('/api/exercise', async (req, res) => {
   const url = 'https://exercisedb.p.rapidapi.com/exercises/target/';
   const muscle = req.query.search || 'triceps'; 
@@ -179,14 +180,25 @@ app.post('/api/create_task', async (req, res) => {
 
 app.post('api/add_workout', async (req, res) => {
   try {
-    const user = await UserModel.findOne({ email: req.body.email })
+    const { token, workouts } = req.body;
+    let email;
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      email = decoded.id
+    }
+    catch(error) {
+      return res.status(401).json({ message: "Invalid token." })
+    }
+
+    const user = await User.findOne({ "email": email })
     if (!user) {
       return res.status(400).json({ message: "User not found" })
     }
-
-
-
-  } catch (error) {
+    user.customeWorkouts.push(workouts)
+    await user.save()
+    return res.status(201).json({ message: "Workout created" })
+  } 
+  catch (error) {
     console.error("Unknown error: ", error)
     return res.status(500).json({ message: "Server error" })
   }
