@@ -45,9 +45,9 @@ describe("CurrentWorkout", () => {
       </Provider>
     );
 
-    expect(screen.getByText("Test Workout")).toBeInTheDocument(); // ✅ Title
-    expect(screen.getByText("Bench Press")).toBeInTheDocument(); // ✅ Anaerobic Exercise
-    expect(screen.getByText("Running")).toBeInTheDocument(); // ✅ Aerobic Exercise
+    expect(screen.getByText("Test Workout")).toBeInTheDocument(); // title
+    expect(screen.getByText("Bench Press")).toBeInTheDocument(); // anaerobic Exercise
+    expect(screen.getByText("Running")).toBeInTheDocument(); // aerobic Exercise
   });
 
   test("starts and stops the timer", () => {
